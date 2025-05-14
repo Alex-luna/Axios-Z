@@ -1,0 +1,209 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    background: #000;
+}
+
+#scene {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#togglePanel {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 3;
+    background: rgba(0,0,0,0.8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 2rem;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background 0.2s, opacity 0.2s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.ctrl-pressed #togglePanel {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#sidePanel {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.92);
+    padding: 24px 20px 20px 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    color: white;
+    min-width: 320px;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 32px 0 rgba(0,0,0,0.25);
+    gap: 0;
+    transition: opacity 0.2s, visibility 0.2s;
+}
+
+#panelControls {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 28px;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+#pauseBtn {
+    background: #222;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 18px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+#pauseBtn.paused {
+    background: #4CAF50;
+    color: #fff;
+}
+#pauseBtn:hover {
+    background: #444;
+}
+
+input[type="range"] {
+    width: 100px;
+    accent-color: #4CAF50;
+}
+
+#scaleSlider {
+    width: 120px;
+}
+
+#scaleValue {
+    min-width: 48px;
+    display: inline-block;
+    text-align: right;
+}
+
+#angleXSlider, #angleYSlider, #angleZSlider {
+    width: 120px;
+}
+#angleXValue, #angleYValue, #angleZValue {
+    min-width: 40px;
+    display: inline-block;
+    text-align: right;
+}
+#spacingSlider, #spacingXSlider {
+    width: 120px;
+}
+#spacingValue, #spacingXValue {
+    min-width: 40px;
+    display: inline-block;
+    text-align: right;
+}
+
+#panelControls, #panelImages, #imageList, .image-item {
+    position: static !important;
+    z-index: auto !important;
+}
+
+#panelImages {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+#imageList {
+    margin-top: 8px;
+    background: rgba(20, 20, 20, 0.85);
+    padding: 12px 8px;
+    border-radius: 10px;
+    color: white;
+    max-width: 100%;
+    max-height: 220px;
+    overflow-y: auto;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 2px 8px 0 rgba(0,0,0,0.10);
+}
+
+.image-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    gap: 8px;
+}
+.image-item:last-child {
+    border-bottom: none;
+}
+
+.image-item span {
+    font-size: 15px;
+    color: #fff;
+    flex: 1;
+    word-break: break-all;
+}
+
+.remove-image {
+    background: #ff4444;
+    padding: 4px 10px;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-left: 8px;
+    min-width: 70px;
+    text-align: center;
+    box-shadow: 0 1px 4px 0 rgba(0,0,0,0.10);
+}
+.remove-image:hover {
+    background: #cc0000;
+}
+
+h4 {
+    margin: 0 0 8px 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+}
+
+@media (max-width: 600px) {
+    #sidePanel {
+        min-width: 90vw;
+        left: 5vw;
+        padding: 16px 8px 8px 8px;
+    }
+    #togglePanel {
+        left: 5vw;
+    }
+    #panelControls {
+        margin-bottom: 16px;
+    }
+    #imageList {
+        max-height: 120px;
+    }
+}
