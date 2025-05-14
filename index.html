@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Depth Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="togglePanel" title="Mostrar/ocultar painel">☰</button>
+    <div id="sidePanel" class="hidden">
+        <div id="panelControls">
+            <div class="control-group">
+                <input type="text" id="imageUrl" placeholder="Cole a URL da imagem aqui">
+                <button id="addImage">+ Adicionar Imagem</button>
+            </div>
+            <div class="control-group">
+                <input type="color" id="backgroundColor" value="#000000">
+                <label for="backgroundColor">🎨 Cor de Fundo</label>
+            </div>
+            <div class="control-group">
+                <input type="checkbox" id="loopToggle" checked>
+                <label for="loopToggle">🔁 Loop</label>
+            </div>
+            <div class="control-group">
+                <label for="speedSlider">🚀 Velocidade</label>
+                <input type="range" id="speedSlider" min="0.5" max="10" step="0.1" value="2">
+                <span id="speedValue">2</span>
+            </div>
+            <div class="control-group">
+                <label for="spacingSlider">📏 Espaçamento Z</label>
+                <input type="range" id="spacingSlider" min="300" max="3000" step="10" value="1000">
+                <span id="spacingValue">1000</span>
+            </div>
+            <div class="control-group">
+                <label for="spacingXSlider">📏 Espaçamento X</label>
+                <input type="range" id="spacingXSlider" min="-2000" max="2000" step="10" value="0">
+                <span id="spacingXValue">0</span>
+            </div>
+            <div class="control-group">
+                <label for="angleXSlider">🌀 Rotação X</label>
+                <input type="range" id="angleXSlider" min="-360" max="360" step="1" value="10">
+                <span id="angleXValue">10°</span>
+            </div>
+            <div class="control-group">
+                <label for="angleYSlider">🌀 Rotação Y</label>
+                <input type="range" id="angleYSlider" min="-360" max="360" step="1" value="10">
+                <span id="angleYValue">10°</span>
+            </div>
+            <div class="control-group">
+                <label for="angleZSlider">🌀 Rotação Z</label>
+                <input type="range" id="angleZSlider" min="-360" max="360" step="1" value="0">
+                <span id="angleZValue">0°</span>
+                <button id="randomizeAngles">Randomizar</button>
+            </div>
+            <div class="control-group">
+                <label for="scaleSlider">🔍 Tamanho</label>
+                <input type="range" id="scaleSlider" min="0.2" max="2" step="0.01" value="1">
+                <span id="scaleValue">1.00x</span>
+            </div>
+            <div class="control-group">
+                <button id="pauseBtn">⏸️ Pausar</button>
+            </div>
+        </div>
+        <div id="panelImages">
+            <h4>Imagens</h4>
+            <div id="imageList"></div>
+        </div>
+    </div>
+    <canvas id="scene"></canvas>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>
