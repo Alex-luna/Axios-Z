@@ -3,7 +3,14 @@ const INITIAL_IMAGES = [
     'https://images.unsplash.com/photo-1747002723627-64bd22456217?q=80&w=1920',
     'https://images.unsplash.com/photo-1746311585296-f91039c70a8f?q=80&w=1920',
     'https://images.unsplash.com/photo-1747109644717-9e867b41c987?q=80&w=1920',
-    'https://images.unsplash.com/photo-1622551445161-bab5bcb90ff4?q=80&w=1920'
+    'https://images.unsplash.com/photo-1526510747491-58f928ec870f?q=80&w=1920',
+    'https://images.unsplash.com/photo-1622551445161-bab5bcb90ff4?q=80&w=1920',
+    'https://images.unsplash.com/photo-1495924979005-79104481a52f?q=80&w=1920',
+    'https://images.unsplash.com/photo-1498551172505-8ee7ad69f235?q=80&w=1920',
+    'https://images.unsplash.com/photo-1495707800306-e240c5a0d65f?q=80&w=1920',
+    'https://images.unsplash.com/photo-1587910234573-d6fc84743bc8?q=80&w=1920',
+    'https://images.unsplash.com/photo-1501621667575-af81f1f0bacc?q=80&w=1920',
+    'https://images.unsplash.com/photo-1508974239320-0a029497e820?q=80&w=1920',
 ];
 
 const DEFAULTS = {
@@ -39,6 +46,11 @@ class DepthGallery {
         this.scale = DEFAULTS.scale;
         this.isPaused = false;
         this._shouldAnimate = true;
+        this.isDragging = false;
+        this.lastMouseY = 0;
+        this.lastMouseX = 0;
+        this.cameraY = 0;
+        this.cameraX = 0;
         
         this.init();
         this.setupEventListeners();
@@ -195,6 +207,42 @@ class DepthGallery {
                 document.body.classList.remove('ctrl-pressed');
             }
         });
+
+        // --- Controle de câmera X e Y com mouse ---
+        const canvas = this.renderer.domElement;
+        canvas.addEventListener('mousedown', (e) => {
+            this.isDragging = true;
+            this.lastMouseY = e.clientY;
+            this.lastMouseX = e.clientX;
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (this.isDragging) {
+                const deltaY = e.clientY - this.lastMouseY;
+                const deltaX = e.clientX - this.lastMouseX;
+                this.cameraY -= deltaY * 2; // Sensibilidade Y
+                this.cameraX += deltaX * 2; // Sensibilidade X
+                this.lastMouseY = e.clientY;
+                this.lastMouseX = e.clientX;
+            }
+        });
+        window.addEventListener('mouseup', () => {
+            this.isDragging = false;
+        });
+        // --- Fim do controle de câmera X e Y ---
+
+        // --- Controle de visibilidade do cursor ---
+        const updateCursor = () => {
+            if (sidePanel.classList.contains('hidden')) {
+                canvas.style.cursor = 'none';
+            } else {
+                canvas.style.cursor = 'default';
+            }
+        };
+        // Atualiza ao abrir/fechar o painel
+        document.getElementById('togglePanel').addEventListener('click', updateCursor);
+        // Atualiza ao carregar
+        updateCursor();
+        // --- Fim do controle de visibilidade do cursor ---
     }
 
     addImage(url, zPosition = null, xPosition = null) {
@@ -364,6 +412,8 @@ class DepthGallery {
             }
             this.camera.position.z = this.cameraPosition;
         }
+        this.camera.position.y = this.cameraY;
+        this.camera.position.x = this.cameraX;
         this.renderer.render(this.scene, this.camera);
         requestAnimationFrame(this.animate.bind(this));
     }
